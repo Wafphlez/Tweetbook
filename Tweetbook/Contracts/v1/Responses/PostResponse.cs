@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tweetbook.Domain
+namespace Tweetbook.Contracts.v1.Responses
 {
-    public class Post
+    public class PostResponse
     {
         public string Id { get; set; }
     }
