@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tweetbook.Data;
 using Microsoft.AspNetCore.Identity;
+using Tweetbook.Services;
 
 namespace Tweetbook.Installers
 {
@@ -20,6 +21,8 @@ namespace Tweetbook.Installers
         configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<DataContext>();
+
+            services.AddSingleton<IPostService, PostService>();
         }
     }
 }

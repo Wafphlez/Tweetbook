@@ -9,23 +9,36 @@ using Tweetbook.Contracts.v1;
 using Tweetbook.Contracts.v1.Requests;
 using Tweetbook.Contracts.v1.Responses;
 using Tweetbook.Domain;
+using Tweetbook.Services;
 
 namespace Tweetbook.Controllers.v1
 {
     public class PostController : Controller
     {
-        List<Post> _posts = new List<Post>();
+        private readonly IPostService _postService;
+
+        public PostController(IPostService postService)
+        {
+            _postService = postService;
+        }
 
         [HttpGet(ApiRoutes.Posts.GetAllPosts)]
         public IActionResult GetAllPosts()
         {
+            return Ok(_postService.GetPosts());
+        }
 
-            for (int i = 0; i < 5; i++)
+        [HttpGet(ApiRoutes.Posts.GetPost)]
+        public IActionResult GetPost([FromRoute] Guid postId)
+        {
+            var post = _postService.GetPostById(postId);
+
+            if(post == null)
             {
-                _posts.Add(new Post { Id = Guid.NewGuid().ToString() });
+                return NotFound();
             }
 
-            return Ok(_posts);
+            return Ok(post);
         }
 
         [HttpPost(ApiRoutes.Posts.CreatePost)]
@@ -33,12 +46,12 @@ namespace Tweetbook.Controllers.v1
         {
 
             var post = new Post { Id = postRequest.Id };
-            if (string.IsNullOrEmpty(post.Id))
+            if (post.Id == Guid.Empty)
             {
-                post.Id = Guid.NewGuid().ToString();
+                post.Id = Guid.NewGuid();
             }
 
-            _posts.Add(post);
+            _postService.GetPosts().Add(post);
 
             var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
             var endpoint = baseUrl + "/" + ApiRoutes.Posts.GetPost.Replace("{postId}", post.Id.ToString());
