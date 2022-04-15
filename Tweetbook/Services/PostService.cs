@@ -32,5 +32,31 @@ namespace Tweetbook.Services
         {
             return _posts;
         }
+
+        public bool UpdatePost(Post post)
+        {
+            if (GetPostById(post.Id) == null)
+            {
+                return false;
+            }
+
+            var index = _posts.FindIndex(x => x.Id == post.Id);
+            _posts[index] = post;
+
+            return true;
+        }
+
+        public bool DeletePost(Guid postId)
+        {
+            var post = GetPostById(postId);
+
+            if (post == null)
+            {
+                return false;
+            }
+
+            _posts.Remove(post);
+            return true;
+        }
     }
 }

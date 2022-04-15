@@ -33,7 +33,39 @@ namespace Tweetbook.Controllers.v1
         {
             var post = _postService.GetPostById(postId);
 
-            if(post == null)
+            if (post == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(post);
+        }
+
+        [HttpDelete(ApiRoutes.Posts.DeletePost)]
+        public IActionResult DeletePost([FromRoute] Guid postId)
+        {
+            var deleted = _postService.DeletePost(postId);
+
+            if (!deleted)
+            {
+                return NotFound();
+            }
+
+            return Ok(_postService.GetPostById(postId));
+        }
+
+        [HttpPut(ApiRoutes.Posts.UpdatePost)]
+        public IActionResult UpdatePost([FromRoute] Guid postId, [FromBody] UpdatePostRequest request)
+        {
+            var post = new Post
+            {
+                Id = postId,
+                Name = request.Name
+            };
+
+            var updated = _postService.UpdatePost(post);
+
+            if (!updated)
             {
                 return NotFound();
             }
