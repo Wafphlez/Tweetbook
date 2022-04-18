@@ -11992,8 +11992,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\wafph\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\wafph\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
@@ -12004,11 +12003,8 @@
       "packagesPath": "C:\\Users\\wafph\\.nuget\\packages\\",
       "outputPath": "F:\\Users\\wafph\\source\\repos\\Tweetbook\\Tweetbook\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "B:\\Users\\wafph\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "B:\\Users\\wafph\\AppData\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -12080,7 +12076,7 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.104\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }

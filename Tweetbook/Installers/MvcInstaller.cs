@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tweetbook.Options;
+using Tweetbook.Services;
 
 namespace Tweetbook.Installers
 {
@@ -22,6 +23,7 @@ namespace Tweetbook.Installers
             configuration.Bind(nameof(JwtSettings),jwtSettings);
             services.AddSingleton(jwtSettings);
 
+            services.AddScoped<IIdentityService, IdentityService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
