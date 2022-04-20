@@ -25,9 +25,9 @@ namespace Tweetbook.Services
 
         public async Task<AuthenticationResult> RegisterAsync(string email, string password)
         {
-            var userExists = await _userManager.FindByEmailAsync(email);
+            var user = await _userManager.FindByEmailAsync(email);
 
-            if (userExists != null)
+            if (user != null)
             {
                 return new AuthenticationResult
                 {
@@ -51,6 +51,36 @@ namespace Tweetbook.Services
                 };
             }
 
+            return GenerateAuthResult(newUser);
+        }
+
+        public async Task<AuthenticationResult> LoginAsync(string email, string password)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                return new AuthenticationResult
+                {
+                    Errors = new[] { "User does not exist" }
+                };
+            }
+
+            var validPassword = await _userManager.CheckPasswordAsync(user, password);
+
+            if (!validPassword)
+            {
+                return new AuthenticationResult
+                {
+                    Errors = new[] { "Wrong email/password" }
+                };
+            }
+
+            return GenerateAuthResult(user);
+        }
+
+        private AuthenticationResult GenerateAuthResult(IdentityUser newUser)
+        {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -73,7 +103,6 @@ namespace Tweetbook.Services
                 IsSuccessful = true,
                 Token = tokenHandler.WriteToken(token)
             };
-
         }
     }
 }
